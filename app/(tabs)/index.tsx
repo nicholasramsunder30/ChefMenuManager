@@ -1,98 +1,226 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useMenu } from '@/context/MenuContext';
+import { router } from 'expo-router';
+import React from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function MenuManagerScreen() {
+  const { menuItems } = useMenu();
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.title}>Menu Manager</Text>
+          <Text style={styles.subtitle}>CHEF CHRISTOFFEL</Text>
+        </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View style={styles.settingsButton}>
+          <Text style={styles.settingsText}>⚙</Text>
+        </View>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>
+            ACTIVE DISHES ({menuItems.length})
+          </Text>
+          <Text style={styles.currency}>CURRENCY: ZAR (R)</Text>
+        </View>
+
+        {menuItems.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyTitle}>No Menu Items</Text>
+            <Text style={styles.emptyText}>
+              No menu items have been added yet.
+            </Text>
+          </View>
+        ) : (
+          menuItems.map((item) => (
+            <MenuItem
+              key={item.id}
+              name={item.name}
+              course={item.course}
+              description={item.description}
+              price={item.price}
+            />
+          ))
+        )}
+
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => router.push('/add-item')}
+        >
+          <Text style={styles.addButtonText}>+ Add Menu Item</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function MenuItem({
+  name,
+  course,
+  description,
+  price,
+}: {
+  name: string;
+  course: string;
+  description: string;
+  price: string;
+}) {
+  return (
+    <View style={styles.menuItem}>
+      <View style={styles.itemTop}>
+        <Text style={styles.itemName}>{name}</Text>
+        <Text style={styles.price}>{price}</Text>
+      </View>
+
+      <Text style={styles.course}>{course}</Text>
+      <Text style={styles.description}>{description}</Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#F7F7F5',
+  },
+
+  header: {
+    paddingHorizontal: 24,
+    paddingTop: 55,
+    paddingBottom: 25,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  title: {
+    fontSize: 30,
+    fontWeight: '700',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  subtitle: {
+    fontSize: 12,
+    letterSpacing: 2,
+    marginTop: 5,
+    opacity: 0.6,
+  },
+
+  settingsButton: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  settingsText: {
+    fontSize: 20,
+  },
+
+  content: {
+    paddingHorizontal: 24,
+    paddingBottom: 40,
+  },
+
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 1,
+  },
+
+  currency: {
+    fontSize: 10,
+    opacity: 0.5,
+  },
+
+  menuItem: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 18,
+    marginBottom: 12,
+  },
+
+  itemTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  itemName: {
+    fontSize: 18,
+    fontWeight: '700',
+    flex: 1,
+  },
+
+  price: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+  course: {
+    fontSize: 11,
+    fontWeight: '600',
+    marginTop: 5,
+    opacity: 0.6,
+  },
+
+  description: {
+    fontSize: 14,
+    marginTop: 10,
+    lineHeight: 20,
+    opacity: 0.7,
+  },
+
+  emptyContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 30,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
+  emptyText: {
+    fontSize: 14,
+    marginTop: 8,
+    opacity: 0.6,
+    textAlign: 'center',
+  },
+
+  addButton: {
+    backgroundColor: '#111111',
+    paddingVertical: 17,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 15,
+  },
+
+  addButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 1,
   },
 });

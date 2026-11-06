@@ -1,50 +1,96 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Chef's Menu Manager
 
-## Get started
+## Project Overview
 
-1. Install dependencies
+Chef's Menu Manager is a React Native mobile application developed for Chef Christoffel. The application allows the chef to manage restaurant menu items through a simple and user-friendly interface.
+
+The application was developed using React Native, Expo and TypeScript.
+
+## Features
+
+- Add new menu items.
+- Edit existing menu items.
+- Delete menu items with confirmation.
+- Search menu items by dish name.
+- Filter menu items by course.
+- Clear search and filters.
+- Display menu statistics.
+- Calculate the average price of menu items.
+- Display the total number of dishes and the number of items in each course.
+- Save menu data locally using AsyncStorage.
+- Validate user input and display feedback messages.
+
+## Technologies Used
+
+- React Native
+- Expo SDK 54
+- TypeScript
+- Expo Router
+- AsyncStorage
+- Visual Studio Code
+- Android Studio Emulator
+- Git and GitHub
+
+## Installation and Setup
+
+1. Clone the GitHub repository.
+2. Open the project folder in Visual Studio Code.
+3. Install the dependencies:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+4. Start the application:
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+5. Press `a` to open the application in the Android emulator.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Change Log
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Changes from Part 2 to Final PoE
 
-## Get a fresh project
+**1. Menu Management**
+- Added functionality to edit existing menu items.
+- Added functionality to delete menu items.
+- Added confirmation messages when deleting items.
+- Ensured changes are reflected immediately.
 
-When you're ready, run:
+**2. Search and Filtering**
+- Added search functionality using dish names.
+- Added filtering by Starter, Main Course and Dessert.
+- Added an option to clear search and filters.
 
-```bash
-npm run reset-project
-```
+**3. Menu Statistics**
+- Added a total menu item counter.
+- Added average menu price calculation.
+- Added individual counters for starters, main courses and desserts.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**4. Data Storage**
+- Integrated AsyncStorage to save menu items locally.
+- Added functionality to load saved menu items when the application starts.
 
-## Learn more
+**5. Code Organisation and Refactoring**
+- Introduced reusable StatCard and MenuItemCard components.
+- Improved code organisation and naming.
+- Used reusable functions for navigation and menu management.
 
-To learn more about developing your project with Expo, look at the following resources:
+**6. Validation and User Feedback**
+- Added required-field validation.
+- Added price validation to prevent invalid or negative prices.
+- Restricted prices to two decimal places.
+- Added clear success and error messages.
+- Improved keyboard handling and accessibility labels.
+- Added cancel options to the Add and Edit screens.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Developer
 
-## Join the community
+Nicholas Ramsunder
 
-Join our community of developers creating universal apps.
+## Repository
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+GitHub: https://github.com/nicholasramsunder30/ChefMenuManager.git
